@@ -1,0 +1,132 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20240522-1
+      author: winston
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: generic_products
+      changes:
+        - createTable:
+            tableName: generic_products
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_pharmaceutical
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: requires_prescription
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: warning
+                  type: TEXT
+              - column:
+                  name: category
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 20240522-2
+      author: winston
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: generic_products
+      changes:
+        - createTable:
+            tableName: products
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: generic_id
+                  type: UUID
+                  constraints:
+                    foreignKeyName: fk_product_generic
+                    referencedTableName: generic_products
+                    referencedColumnNames: id
+              - column:
+                  name: dosage_form
+                  type: VARCHAR(50)
+              - column:
+                  name: strength
+                  type: VARCHAR(50)
+              - column:
+                  name: current_selling_price
+                  type: DECIMAL(19, 2)
+                  defaultValueNumeric: 0
+
+  - changeSet:
+      id: 20240522-3
+      author: winston
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: generic_products
+      changes:
+        - createTable:
+            tableName: stock_entries
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: product_id
+                  type: UUID
+                  constraints:
+                    foreignKeyName: fk_stock_product
+                    referencedTableName: products
+                    referencedColumnNames: id
+              - column:
+                  name: quantity_received
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantity_sold_from_this_batch
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: arrival_date
+                  type: DATE
+              - column:
+                  name: expiry_date
+                  type: DATE
+              - column:
+                  name: batch_number
+                  type: VARCHAR(100)
+              - column:
+                  name: unit_cost_price
+                  type: DECIMAL(19, 2)

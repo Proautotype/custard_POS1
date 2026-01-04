@@ -1,0 +1,41 @@
+app:
+  name: PharmPOS
+  productCategories:
+    - "Prescription (Rx)"
+    - "OTC"
+    - "Supplements"
+    - "First Aid"
+    - "Beauty"
+
+server:
+  port: ${PORT:8080}
+
+logging:
+  level:
+    org.atmosphere: warn
+
+vaadin:
+  # The 'allowed-packages' property expects a list or a comma-separated string.
+  # If you are trying to list packages line-by-line, use the correct list syntax:
+  allowed-packages: com.vaadin, org.vaadin, com.flowingcode, com.pos
+  # If the list above is incorrect for Vaadin 23+, check the official documentation for the exact format.
+  # A simpler approach might be to configure it as a single string:
+  # allowed-packages: com.vaadin,org.vaadin,com.flowingcode,com.pos
+
+spring:
+  datasource:
+    # Use the standard JDBC driver format
+    url: jdbc:postgresql://localhost:5332/PosDB
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    # Modern Spring Boot versions use 'database-platform' or 'hibernate.dialect'
+    database-platform: org.hibernate.dialect.PostgreSQLDialect 
+    show-sql: true
+  devtools:
+    restart:
+      poll-interval: 2s
+      quiet-period: 1s

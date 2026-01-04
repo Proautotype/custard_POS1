@@ -1,1 +1,40 @@
+@font-face {
+    font-family: "Inter";
+    src: url("./fonts/IntelOneMono-VariableFont_wght.ttf") format("ttf");
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+
 /* Add your styles here */
+.chip-group {
+    gap: var(--lumo-space-s);
+}
+
+.chip {
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    font-size: var(--lumo-font-size-s);
+    color: var(--lumo-secondary-text-color);
+    transition: background-color 120ms ease, color 120ms ease;
+}
+
+.chip:hover {
+    background-color: var(--lumo-contrast-5pct);
+}
+
+.chip.selected {
+    background-color: var(--lumo-primary-color-10pct);
+    color: var(--lumo-primary-text-color);
+    font-weight: 500;
+}
+
+.chip:focus-visible {
+    outline: 2px solid var(--lumo-primary-color);
+    outline-offset: 2px;
+}
+
+.receipt-area {
+    font-family: monospace;
+}

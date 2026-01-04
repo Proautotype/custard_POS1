@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changes/changelog-v1.0.yaml
+  - include:
+      file: db/changelog/changes/changelog-seed-generics.yaml
+  - include:
+      file: db/changelog/changes/changelog-seed-100-products.yaml
+  - include:
+      file: db/changelog/changes/changelog_drug_dosage_form.yaml
+  - include:
+      file: db/changelog/changes/changelog-seed-suppliers.yaml

@@ -1,0 +1,6 @@
+id,name,is_pharmaceutical,requires_prescription,category,warning
+550e8400-e29b-41d4-a716-446655440001,Amoxicillin,true,true,Prescription (Rx),Finish the course
+550e8400-e29b-41d4-a716-446655440002,Paracetamol,true,false,OTC,Max 4g daily
+550e8400-e29b-41d4-a716-446655440003,Vitamin C,false,false,Supplements,""
+550e8400-e29b-41d4-a716-446655440004,Ibuprofen,true,false,OTC,Take with food
+550e8400-e29b-41d4-a716-446655440005,Isopropyl Alcohol,false,false,First Aid,""

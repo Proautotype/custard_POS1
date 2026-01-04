@@ -1,0 +1,101 @@
+id,name,description,generic_id,dosage_form,strength,current_selling_price
+p-001,Amoxil Forte,High strength antibiotic,550e8400-e29b-41d4-a716-446655440001,Capsule,500mg,15.50
+p-002,Panadol Advance,Fast acting pain relief,550e8400-e29b-41d4-a716-446655440002,Tablet,500mg,4.99
+p-003,Advil Liqui-Gels,Anti-inflammatory,550e8400-e29b-41d4-a716-446655440003,Softgel,200mg,8.25
+p-004,Cebion,Daily vitamin supplement,550e8400-e29b-41d4-a716-446655440004,Effervescent,1000mg,12.00
+p-005,Sterillium,Medical grade disinfectant,550e8400-e29b-41d4-a716-446655440005,Liquid,70%,6.50
+p-006,Trimox,Generic amoxicillin variant,550e8400-e29b-41d4-a716-446655440001,Suspension,250mg/5ml,10.75
+p-007,Tylenol Extra,Acetaminophen supplement,550e8400-e29b-41d4-a716-446655440002,Caplet,650mg,7.40
+p-008,Motrin IB,Pain reliever and fever reducer,550e8400-e29b-41d4-a716-446655440003,Tablet,200mg,6.90
+p-009,Redoxon,Triple action immunity,550e8400-e29b-41d4-a716-446655440004,Tablet,500mg,14.20
+p-010,Surgi-Gel,Hand and surface sanitizer,550e8400-e29b-41d4-a716-446655440005,Gel,90%,5.00
+p-011,Moxatag,Extended release antibiotic,550e8400-e29b-41d4-a716-446655440001,Tablet,775mg,45.00
+p-012,Calpol,Infant paracetamol,550e8400-e29b-41d4-a716-446655440002,Syrup,120mg/5ml,9.50
+p-013,Nurofen,Standard ibuprofen,550e8400-e29b-41d4-a716-446655440003,Tablet,200mg,5.50
+p-014,Emergen-C,Immune support fizzy drink,550e8400-e29b-41d4-a716-446655440004,Sachet,1000mg,1.50
+p-015,FirstAid Antiseptic,Generic rubbing alcohol,550e8400-e29b-41d4-a716-446655440005,Liquid,99%,4.00
+p-016,DisperMox,Water soluble antibiotic,550e8400-e29b-41d4-a716-446655440001,Tablet,600mg,18.00
+p-017,Biogesic,Fever relief,550e8400-e29b-41d4-a716-446655440002,Tablet,500mg,3.00
+p-018,Brufen,High dose ibuprofen,550e8400-e29b-41d4-a716-446655440003,Tablet,400mg,12.50
+p-019,Nature Made VitC,Natural source supplement,550e8400-e29b-41d4-a716-446655440004,Gummy,250mg,18.99
+p-020,CleanSafe,Antiseptic solution,550e8400-e29b-41d4-a716-446655440005,Spray,75%,7.25
+p-021,Amoxicillin Sandoz,European brand amox,550e8400-e29b-41d4-a716-446655440001,Capsule,250mg,9.00
+p-022,Paracet-Store,White label paracetamol,550e8400-e29b-41d4-a716-446655440002,Tablet,500mg,2.50
+p-023,Ibu-Blue,Generic ibuprofen capsules,550e8400-e29b-41d4-a716-446655440003,Capsule,200mg,4.80
+p-024,Solgar Vitamin C,Premium crystals,550e8400-e29b-41d4-a716-446655440004,Powder,5000mg,32.00
+p-025,PureIt Alcohol,Clear disinfectant,550e8400-e29b-41d4-a716-446655440005,Liquid,70%,3.99
+p-026,Augmentin Duo,Combined antibiotic,550e8400-e29b-41d4-a716-446655440001,Tablet,1g,28.50
+p-027,Doliprane,French paracetamol brand,550e8400-e29b-41d4-a716-446655440002,Suppository,100mg,11.00
+p-028,Cuprofen,Maximum strength ibuprofen,550e8400-e29b-41d4-a716-446655440003,Tablet,400mg,9.90
+p-029,Centrum C,Daily health boost,550e8400-e29b-41d4-a716-446655440004,Tablet,100mg,10.00
+p-030,MediWipe,Alcohol saturated wipes,550e8400-e29b-41d4-a716-446655440005,Wipe,70%,8.00
+p-031,Novamox,Indian pharmaceutical brand,550e8400-e29b-41d4-a716-446655440001,Capsule,500mg,11.20
+p-032,Lemsip Max,Cold and flu relief,550e8400-e29b-41d4-a716-446655440002,Sachet,1000mg,13.50
+p-033,Fenpaed,Childrens ibuprofen,550e8400-e29b-41d4-a716-446655440003,Syrup,100mg/5ml,8.40
+p-034,Kirkland C,Bulk vitamin C,550e8400-e29b-41d4-a716-446655440004,Tablet,1000mg,24.00
+p-035,RubRight,Standard rubbing alcohol,550e8400-e29b-41d4-a716-446655440005,Liquid,70%,4.20
+p-036,Amoxil Ped,Pediatric drops,550e8400-e29b-41d4-a716-446655440001,Drops,100mg/ml,14.00
+p-037,Epanadol,Sugar free paracetamol,550e8400-e29b-41d4-a716-446655440002,Tablet,500mg,5.60
+p-038,Arthrofen,Joint pain specialist,550e8400-e29b-41d4-a716-446655440003,Tablet,600mg,19.00
+p-039,Nutri-C,Chewable tablets,550e8400-e29b-41d4-a716-446655440004,Chewable,500mg,11.50
+p-040,Alcogel-100,Mini hand sanitizer,550e8400-e29b-41d4-a716-446655440005,Gel,75%,2.00
+p-041,Zimox,Italian amoxicillin,550e8400-e29b-41d4-a716-446655440001,Capsule,1g,21.00
+p-042,Panado,Southern Africa brand,550e8400-e29b-41d4-a716-446655440002,Syrup,120mg/5ml,7.80
+p-043,Galprofen,General ibuprofen,550e8400-e29b-41d4-a716-446655440003,Caplet,200mg,4.50
+p-044,Vitamin C Gold,Time-release formula,550e8400-e29b-41d4-a716-446655440004,Tablet,1500mg,27.00
+p-045,Pro-Sweep,Industrial sanitizer,550e8400-e29b-41d4-a716-446655440005,Liquid,70%,18.00
+p-046,Polymox,Quick-dissolve antibiotic,550e8400-e29b-41d4-a716-446655440001,Tablet,500mg,14.90
+p-047,Efferalgan,Effervescent paracetamol,550e8400-e29b-41d4-a716-446655440002,Effervescent,500mg,10.20
+p-048,PediaCare,Child pain relief,550e8400-e29b-41d4-a716-446655440003,Suspension,100mg,9.10
+p-049,Bio-C,High bio-availability,550e8400-e29b-41d4-a716-446655440004,Capsule,500mg,20.00
+p-050,Sanitol,Hospital grade alcohol,550e8400-e29b-41d4-a716-446655440005,Liquid,95%,15.00
+p-051,Amoxy-Care,Clinic pack,550e8400-e29b-41d4-a716-446655440001,Capsule,500mg,13.00
+p-052,Tylenol PM,Nighttime paracetamol,550e8400-e29b-41d4-a716-446655440002,Caplet,500mg,11.50
+p-053,Deep Relief,Ibuprofen gel,550e8400-e29b-41d4-a716-446655440003,Gel,5%,13.90
+p-054,PureWay-C,Advanced vit C,550e8400-e29b-41d4-a716-446655440004,Tablet,500mg,22.50
+p-055,AlcoPure-Mini,Travel size,550e8400-e29b-41d4-a716-446655440005,Spray,70%,2.50
+p-056,Ospamox,Sandoz brand variant,550e8400-e29b-41d4-a716-446655440001,Tablet,1g,24.00
+p-057,Panadol Night,Sleep aid paracetamol,550e8400-e29b-41d4-a716-446655440002,Tablet,500mg,12.00
+p-058,Nurofen Cold,Combined ibuprofen,550e8400-e29b-41d4-a716-446655440003,Tablet,200mg,14.50
+p-059,Citrus-C,Orange flavor,550e8400-e29b-41d4-a716-446655440004,Chewable,250mg,8.99
+p-060,Sanitize-Pro,Home disinfectant,550e8400-e29b-41d4-a716-446655440005,Liquid,70%,11.00
+p-061,Amoxil-250,Low dose brand,550e8400-e29b-41d4-a716-446655440001,Capsule,250mg,8.50
+p-062,Quick-Relief,Generic acetaminophen,550e8400-e29b-41d4-a716-446655440002,Tablet,500mg,2.00
+p-063,Ibu-Target,Pharmacy choice,550e8400-e29b-41d4-a716-446655440003,Tablet,400mg,6.50
+p-064,C-Zest,Acid-free vitamin C,550e8400-e29b-41d4-a716-446655440004,Capsule,500mg,16.00
+p-065,CleanTouch,Pump sanitizer,550e8400-e29b-41d4-a716-446655440005,Gel,70%,6.00
+p-066,Wymox,High absorption amox,550e8400-e29b-41d4-a716-446655440001,Capsule,250mg,12.00
+p-067,Anacin AF,Caffeine free paracetamol,550e8400-e29b-41d4-a716-446655440002,Tablet,500mg,5.00
+p-068,Advil PM,Sleep aid ibuprofen,550e8400-e29b-41d4-a716-446655440003,Caplet,200mg,15.00
+p-069,Ester-C,Non-acidic supplement,550e8400-e29b-41d4-a716-446655440004,Tablet,500mg,21.00
+p-070,Pure-Spirit,Pure rubbing alcohol,550e8400-e29b-41d4-a716-446655440005,Liquid,99%,9.00
+p-071,Moxilin,Generic antibiotic,550e8400-e29b-41d4-a716-446655440001,Capsule,500mg,10.00
+p-072,Fever-X,Intensive paracetamol,550e8400-e29b-41d4-a716-446655440002,Liquid,250mg,11.00
+p-073,Pedia-Profen,Child drops,550e8400-e29b-41d4-a716-446655440003,Drops,50mg/1.25ml,10.50
+p-074,C-Blast,High dose sachet,550e8400-e29b-41d4-a716-446655440004,Sachet,2000mg,2.50
+p-075,Safe-Prep,Injection site prep,550e8400-e29b-41d4-a716-446655440005,Liquid,70%,3.50
+p-076,Amox-Mepha,Swiss amoxicillin,550e8400-e29b-41d4-a716-446655440001,Tablet,750mg,22.00
+p-077,Paramol,Strong paracetamol,550e8400-e29b-41d4-a716-446655440002,Tablet,500mg,6.00
+p-078,Nurofen Express,Rapid absorption,550e8400-e29b-41d4-a716-446655440003,Softgel,200mg,10.00
+p-079,Daily-C,Basic supplement,550e8400-e29b-41d4-a716-446655440004,Tablet,500mg,7.00
+p-080,Alco-Home,General antiseptic,550e8400-e29b-41d4-a716-446655440005,Liquid,70%,4.50
+p-081,Moxacef,Premium antibiotic,550e8400-e29b-41d4-a716-446655440001,Capsule,500mg,19.50
+p-082,Tempra,Fever relief brand,550e8400-e29b-41d4-a716-446655440002,Drops,80mg/ml,9.00
+p-083,Ibu-Tab,Standard tablets,550e8400-e29b-41d4-a716-446655440003,Tablet,200mg,3.00
+p-084,Vit-Immune,Vitamin C + Zinc,550e8400-e29b-41d4-a716-446655440004,Tablet,1000mg,15.50
+p-085,QuickWipe,Alcohol prep pads,550e8400-e29b-41d4-a716-446655440005,Pad,70%,12.00
+p-086,Helimox,H.Pylori treatment,550e8400-e29b-41d4-a716-446655440001,Tablet,1g,30.00
+p-087,Excedrin AF,Tension headache,550e8400-e29b-41d4-a716-446655440002,Geltab,500mg,12.50
+p-088,Ibu-Junior,Chewable tablets,550e8400-e29b-41d4-a716-446655440003,Chewable,100mg,7.50
+p-089,C-Chews,Kids vitamin C,550e8400-e29b-41d4-a716-446655440004,Chewable,100mg,10.00
+p-090,Alco-Large,Bulk alcohol,550e8400-e29b-41d4-a716-446655440005,Liquid,70%,25.00
+p-091,G-Mox,Generic capsules,550e8400-e29b-41d4-a716-446655440001,Capsule,500mg,8.00
+p-092,Panadol Baby,Infant drops,550e8400-e29b-41d4-a716-446655440002,Drops,100mg/ml,9.50
+p-093,Rapid-Ibu,Liquefied capsules,550e8400-e29b-41d4-a716-446655440003,Capsule,400mg,13.00
+p-094,Ultra-C,Buffered vitamin C,550e8400-e29b-41d4-a716-446655440004,Tablet,1000mg,19.00
+p-095,Clear-Prep,Pre-surgical prep,550e8400-e29b-41d4-a716-446655440005,Liquid,80%,14.00
+p-096,Amox-1000,Extra strength,550e8400-e29b-41d4-a716-446655440001,Tablet,1000mg,26.00
+p-097,Napa,Asian paracetamol brand,550e8400-e29b-41d4-a716-446655440002,Tablet,500mg,3.50
+p-098,Caldolor,Injectable ibuprofen,550e8400-e29b-41d4-a716-446655440003,Vial,800mg,55.00
+p-099,Nature-C,Rosehip extract,550e8400-e29b-41d4-a716-446655440004,Capsule,500mg,23.00
+p-100,Alco-Spray,Fine mist sanitizer,550e8400-e29b-41d4-a716-446655440005,Spray,70%,6.50

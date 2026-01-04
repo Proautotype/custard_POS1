@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: seed-generics-001
+      author: gemini
+      context: dev
+      changes:
+        - insert:
+            tableName: generic_products
+            columns:
+              - column: {name: id, value: "550e8400-e29b-41d4-a716-446655440000"}
+              - column: {name: name, value: "Amoxicillin"}
+              - column: {name: is_pharmaceutical, valueBoolean: true}
+              - column: {name: requires_prescription, valueBoolean: true}
+              - column: {name: category, value: "Prescription (Rx)"}
+              - column: {name: warning, value: "Finish full course."}

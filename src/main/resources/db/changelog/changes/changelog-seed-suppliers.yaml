@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: seed-supplier
+      author: winston
+      context: dev
+      preconditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: suppliers
+
+      changes:
+        - createTable:
+            tableName: suppliers
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phoneNumber
+                  type: VARCHAR(20)
+              - column:
+                  name: email
+                  type: VARCHAR(100)
+
+        - insert:
+            tableName: suppliers
+            columns:
+              - column: {name: id, value: "1c776dc5-17d3-4310-8016-e555cead3070" }
+              - column: {name: name, value: "not_specified" }
+              - column: {name: phoneNumber, value: ""}
+              - column: {name: email, value: ""}
