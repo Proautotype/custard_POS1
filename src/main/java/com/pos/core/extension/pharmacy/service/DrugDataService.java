@@ -15,10 +15,8 @@ public class DrugDataService {
     public boolean hasCriticalInteraction(Sale sale, SaleItem newItem) {
         // Mock Logic: Check if LISINOPRIL is already present.
         if (newItem.getName().contains("LISINOPRIL") || sale.getItems().stream().anyMatch(i -> i.getName().contains("LISINOPRIL"))) {
-            if (sale.getItems().stream().anyMatch(i -> i.getName().contains("IBUPROFEN")) || newItem.getName().contains("IBUPROFEN")) {
-                // In a real app, this would query a dedicated drug database.
-                return true;
-            }
+            // In a real app, this would query a dedicated drug database.
+            return sale.getItems().stream().anyMatch(i -> i.getName().contains("IBUPROFEN")) || newItem.getName().contains("IBUPROFEN");
         }
         return false;
     }

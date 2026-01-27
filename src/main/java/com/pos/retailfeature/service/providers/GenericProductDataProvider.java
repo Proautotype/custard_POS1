@@ -50,4 +50,8 @@ public class GenericProductDataProvider extends AbstractBackEndDataProvider<View
         return size;
     }
 
+    public void setFilter(String filter){
+        this.filter = filter;
+    }
+
 }

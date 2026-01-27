@@ -1,9 +1,9 @@
 package com.pos.inventoryfeature.service;
 
 import com.pos.inventoryfeature.StockEntryDto;
+import com.pos.inventoryfeature.dao.stock.StockEntry;
+import com.pos.inventoryfeature.dao.stock.StockEntryRepository;
 import com.pos.retailfeature.dao.product.ProductsRepository;
-import com.pos.retailfeature.dao.stock.StockEntry;
-import com.pos.retailfeature.dao.stock.StockEntryRepository;
 import com.pos.shared.ProductMapper;
 import com.pos.shared.StockMapper;
 import lombok.RequiredArgsConstructor;

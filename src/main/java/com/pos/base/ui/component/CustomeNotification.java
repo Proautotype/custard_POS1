@@ -13,14 +13,14 @@ import lombok.Setter;
 @Setter
 public class CustomeNotification extends Notification {
 
-    private int notificationDuration = 5000;
+    private final int notificationDuration = 5000;
     private String message = "";
     private String actionText = "";
     private Span messageSpan;
     private Notification.Position position;
     private ComponentEventListener<ClickEvent<Button>> clickListener;
-    private Button actionBtn ;
-    private VerticalLayout content = new VerticalLayout();
+    private Button actionBtn;
+    private final VerticalLayout content = new VerticalLayout();
 
     public CustomeNotification() {
         this.setDuration(notificationDuration);
@@ -35,7 +35,7 @@ public class CustomeNotification extends Notification {
         add(content);
     }
 
-    public void render(){
+    public void render() {
         this.setDuration(notificationDuration);
 
         messageSpan.setText(message);
@@ -46,9 +46,55 @@ public class CustomeNotification extends Notification {
         }
     }
 
-    public void display(){
+    public void display() {
         render();
         this.open();
+    }
+
+    public int getNotificationDuration() {
+        return notificationDuration;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getActionText() {
+        return actionText;
+    }
+
+    public Span getMessageSpan() {
+        return messageSpan;
+    }
+
+    @Override
+    public Position getPosition() {
+        return position;
+    }
+
+    @Override
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public ComponentEventListener<ClickEvent<Button>> getClickListener() {
+        return clickListener;
+    }
+
+    public void setClickListener(ComponentEventListener<ClickEvent<Button>> clickListener) {
+        this.clickListener = clickListener;
+    }
+
+    public Button getActionBtn() {
+        return actionBtn;
+    }
+
+    public VerticalLayout getContent() {
+        return content;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
 }

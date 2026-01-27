@@ -1,6 +1,5 @@
 package com.pos.retailfeature.dto;
 
-import com.pos.retailfeature.dao.product.Product;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

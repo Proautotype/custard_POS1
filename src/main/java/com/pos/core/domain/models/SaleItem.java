@@ -14,8 +14,8 @@ public class SaleItem {
     private final UUID id = UUID.randomUUID();
     private final String barcode;
     private final String name;
-    private int quantity;
-    private BigDecimal unitPrice;
+    private final int quantity;
+    private final BigDecimal unitPrice;
 
     public SaleItem(String barcode, String name, BigDecimal unitPrice, int quantity) {
         this.barcode = barcode;

@@ -1,12 +1,13 @@
 package com.pos.retailfeature.dao.product;
 
-import com.pos.retailfeature.dao.stock.StockEntry;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
+
+import com.pos.inventoryfeature.dao.stock.StockEntry;
 
 @Getter
 @Setter
@@ -42,4 +43,44 @@ public class Product {
     // Add this inside Product class for high-performance sorting/filtering
     @org.hibernate.annotations.Formula("(SELECT COALESCE(SUM(s.quantity_received - s.quantity_sold_from_this_batch), 0) FROM stock_entries s WHERE s.product_id = id)")
     private Integer totalStockLeft;
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public GenericProduct getGenericProduct() {
+        return genericProduct;
+    }
+
+    public String getDosageForm() {
+        return dosageForm;
+    }
+
+    public String getStrength() {
+        return strength;
+    }
+
+    public BigDecimal getCurrentSellingPrice() {
+        return currentSellingPrice;
+    }
+
+    public void setCurrentSellingPrice(BigDecimal newSellingPrice){
+        this.currentSellingPrice = newSellingPrice;
+    }
+
+    public List<StockEntry> getStockEntries() {
+        return stockEntries;
+    }
+
+    public Integer getTotalStockLeft() {
+        return totalStockLeft;
+    }
 }

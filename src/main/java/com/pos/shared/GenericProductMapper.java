@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class GenericProductMapper {
 
-    private final ProductMapper productMapper;
-
     public ViewGenericProductDto toDto(GenericProduct product) {
         return ViewGenericProductDto.builder()
                 .id(product.getId())

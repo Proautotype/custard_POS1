@@ -1,7 +1,8 @@
 package com.pos.retailfeature.dao.sale;
 
+import com.pos.inventoryfeature.dao.stock.StockEntry;
 import com.pos.retailfeature.dao.product.Product;
-import com.pos.retailfeature.dao.stock.StockEntry;
+
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

@@ -12,8 +12,8 @@ import java.io.Serializable;
 public class CreateGenericProductDto implements Serializable {
     private String id;
     private String name;
-    private boolean isPharmaceutical = false;
-    private boolean requiresPrescription = false;
+    private final boolean isPharmaceutical = false;
+    private final boolean requiresPrescription = false;
     private String warning;
     private String category;
 }

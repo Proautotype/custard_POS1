@@ -13,8 +13,8 @@ import java.util.UUID;
 public class Sale {
     private final UUID id = UUID.randomUUID();
     private final List<SaleItem> items = new ArrayList<>();
-    private BigDecimal discount = BigDecimal.ZERO;
-    private BigDecimal taxRate = new BigDecimal("0.05"); // 5% generic tax
+    private final BigDecimal discount = BigDecimal.ZERO;
+    private final BigDecimal taxRate = new BigDecimal("0.05"); // 5% generic tax
 
     public List<SaleItem> getItems() {
         return items;

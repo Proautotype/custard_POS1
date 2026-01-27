@@ -1,4 +1,4 @@
-package com.pos.retailfeature.dao.stock;
+package com.pos.inventoryfeature.dao.stock;
 
 public enum StockStatus {
     IN_STOCK, LOW_STOCK, OUT_OF_STOCK, EXPIRED

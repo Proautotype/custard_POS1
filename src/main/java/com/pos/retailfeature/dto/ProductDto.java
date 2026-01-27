@@ -4,22 +4,19 @@ import com.pos.retailfeature.dao.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.math.BigDecimal;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class ProductDto {
     private String id;
-    private String name;
-    private String description;
-    private String productGenericId;
-    private String dosageForm;
-    private String strength;
-    private BigDecimal sellingPrice;
+    private final String name;
+    private final String description;
+    private final String productGenericId;
+    private final String dosageForm;
+    private final String strength;
+    private final BigDecimal sellingPrice;
 
     // You might want to add a static factory method to convert from entity to DTO
     // id,name,description,generic_id,dosage_form,strength,current_selling_price
@@ -48,6 +45,33 @@ public class ProductDto {
                 .build();
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getProductGenericId() {
+        return productGenericId;
+    }
+
+    public String getDosageForm() {
+        return dosageForm;
+    }
+
+    public String getStrength() {
+        return strength;
+    }
+
+    public BigDecimal getSellingPrice() {
+        return sellingPrice;
+    }
 
     @Override
     public String toString() {

@@ -26,6 +26,7 @@ public class ProductDataProvider extends AbstractBackEndDataProvider<ProductDto,
     public void createProduct(ProductDto productDto) {
         log.info("provider create product");
         productService.createProduct(productDto);
+        refreshAll();
     }
 
     @Override

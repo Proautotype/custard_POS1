@@ -7,6 +7,8 @@ import lombok.Setter;
 import java.util.List;
 import java.util.UUID;
 
+import com.pos.inventoryfeature.dao.stock.StockEntry;
+
 @Entity
 @Table(name = "suppliers")
 @Getter
@@ -22,6 +24,35 @@ public class Supplier {
     private String phoneNumber;
     private String email;
 
-    @OneToMany(mappedBy = "supplier")
-    private List<Purchase> purchaseList;
+    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<StockEntry> stockEntries;
+
+    public UUID getId() {
+        return this.id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }

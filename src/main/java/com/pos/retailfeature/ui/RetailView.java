@@ -2,7 +2,7 @@ package com.pos.retailfeature.ui;
 
 import com.pos.base.ui.HasDynamicHeader;
 import com.pos.core.service.CartState;
-import com.pos.retailfeature.service.providers.ProductDataProvider;
+import com.pos.retailfeature.service.providers.StockDataProvider;
 import com.pos.retailfeature.subcomponent.DisplayView;
 import com.pos.retailfeature.subcomponent.ReceiptView;
 import com.vaadin.flow.component.Component;
@@ -29,12 +29,12 @@ import java.time.format.DateTimeFormatter;
 @PermitAll
 public class RetailView extends VerticalLayout implements HasDynamicHeader {
 
-    private final ProductDataProvider dataProvider;
+    private final StockDataProvider dataProvider;
     private int currentColumns = 2;
     private final DisplayView displayView;
     private final ReceiptView receiptView;
 
-    RetailView(ProductDataProvider dataProvider, CartState cartState) {
+    RetailView(StockDataProvider dataProvider, CartState cartState) {
         this.dataProvider = dataProvider;
 
         setWidthFull();
@@ -45,10 +45,10 @@ public class RetailView extends VerticalLayout implements HasDynamicHeader {
         VerticalLayout main = new VerticalLayout();
         HorizontalLayout content = new HorizontalLayout();
         VerticalLayout leftSection = leftSection();
-        leftSection.setMaxWidth("72%");
+        leftSection.setMaxWidth("70%");
 
         receiptView = new ReceiptView(cartState);
-        receiptView.setMaxWidth("28%");
+        receiptView.setMaxWidth("30%");
 
         VerticalLayout footer = new VerticalLayout();
 
@@ -149,7 +149,7 @@ public class RetailView extends VerticalLayout implements HasDynamicHeader {
     }
 
     private void applyFilter(String query) {
-        dataProvider.setFilter(query);
+        dataProvider.setSearch(query);
         displayView.refresh();
     }
 

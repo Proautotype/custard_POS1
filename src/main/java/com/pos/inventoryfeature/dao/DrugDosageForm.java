@@ -39,8 +39,7 @@ public class DrugDosageForm implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof DrugDosageForm)) return false;
-        DrugDosageForm that = (DrugDosageForm) o;
+        if (!(o instanceof DrugDosageForm that)) return false;
         return id != null && id.equals(that.id);
     }
 

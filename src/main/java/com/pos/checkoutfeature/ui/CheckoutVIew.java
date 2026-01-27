@@ -37,14 +37,13 @@ import java.util.List;
 public class CheckoutVIew extends HorizontalLayout implements HasDynamicHeader {
 
     private CartState cartState;
-    private ArrayList<String> predefinedInputValues = new ArrayList<>();
+    private final ArrayList<String> predefinedInputValues = new ArrayList<>();
     private TextField balanceField;
     private Button completePaymentBtn;
 
     CheckoutVIew(CartState cartState) {
         this.cartState = cartState;
         predefinedInputValues.addAll(List.of("10", "15", "20", "30", "50", "Exact"));
-
 
         setWidthFull();
         setHeightFull();
@@ -60,7 +59,7 @@ public class CheckoutVIew extends HorizontalLayout implements HasDynamicHeader {
         Div checkoutMeta = new Div();
         checkoutMeta.addClassNames(LumoUtility.FlexDirection.COLUMN, LumoUtility.Padding.XSMALL);
         H3 checkoutHeader = new H3("Checkout");
-        Span checkoutTime = new Span("time");
+        Span checkoutTime = new Span(discountCalculator());
         checkoutMeta.add(checkoutHeader, checkoutTime);
         header.add(checkoutMeta);
 
@@ -257,12 +256,10 @@ public class CheckoutVIew extends HorizontalLayout implements HasDynamicHeader {
             double change = BigDecimal.valueOf(inputEvent.getValue()).subtract(cartState.getTotal()).doubleValue();
             balanceField.setValue(String.valueOf(change));
             completePaymentBtn.setEnabled(change >= 0);
-
-            log.info("input value changed {} ", change);
         };
     }
 
-    private ComponentRenderer<Component, ReceiptItem> receiptRowRenderer = new ComponentRenderer<>(receiptItem -> {
+    private final ComponentRenderer<Component, ReceiptItem> receiptRowRenderer = new ComponentRenderer<>(receiptItem -> {
         Div row = new Div();
         Div detail = new Div();
         detail.setWidthFull();
@@ -290,4 +287,12 @@ public class CheckoutVIew extends HorizontalLayout implements HasDynamicHeader {
         return row;
     });
 
+    private String discountCalculator(){
+        return String.format("Discount (%.0f%%) | Total (%.00f)",
+                cartState.getDiscount(),
+                cartState.getTotal()
+        );
+    }
+
 }
+

@@ -18,9 +18,9 @@ public interface ProductsRepository extends JpaRepository<Product, String> {
     Integer sumStockByGenericId(@Param("generic_id") String genericId);
 
     @Query("""
-        SELECT p FROM Product p 
-        LEFT JOIN p.genericProduct g 
-        WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :searchTerm, '%')) 
+        SELECT p FROM Product p
+        LEFT JOIN p.genericProduct g
+        WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :searchTerm, '%'))
         OR LOWER(g.name) LIKE LOWER(CONCAT('%', :searchTerm, '%'))
     """)
     Page<Product> searchProducts(@Param("searchTerm") String searchTerm, Pageable pageable);

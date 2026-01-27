@@ -9,9 +9,9 @@ import java.util.UUID;
 @Getter
 @Setter
 public class SimpleSaleItem {
-    private String id;
-    private String name;
-    private BigDecimal price;
+    private final String id;
+    private final String name;
+    private final BigDecimal price;
 
     public SimpleSaleItem(String name, BigDecimal price){
         id = UUID.randomUUID().toString();

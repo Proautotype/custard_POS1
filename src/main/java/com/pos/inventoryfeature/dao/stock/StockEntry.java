@@ -1,6 +1,7 @@
-package com.pos.retailfeature.dao.stock;
+package com.pos.inventoryfeature.dao.stock;
 
 import com.pos.inventoryfeature.dao.Purchase;
+import com.pos.inventoryfeature.dao.Supplier;
 import com.pos.retailfeature.dao.product.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,7 +11,13 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "stock_entries")
+@Table(
+        name = "stock_entry",
+        indexes = {
+                @Index(name = "idx_stock_product", columnList = "product_id"),
+                @Index(name = "idx_stock_expiry", columnList = "expiryDate")
+        }
+)
 @Getter
 @Setter
 public class StockEntry {
@@ -35,6 +42,9 @@ public class StockEntry {
 
     @ManyToOne(optional = false)
     private Purchase purchase;
+
+    @ManyToOne
+    private Supplier supplier;
 
     public Integer getRemainingInBatch() {
         return quantityReceived - quantitySoldFromThisBatch;
