@@ -1,4 +1,7 @@
 package com.pos.inventoryfeature.dao;
 
-public interface StockMovementRepository {
+import com.pos.inventoryfeature.dao.stock.StockMovement;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface StockMovementRepository extends JpaRepository<StockMovement, Long> {
 }

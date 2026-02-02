@@ -3,7 +3,17 @@ package com.pos.inventoryfeature.dao.stock;
 import com.pos.inventoryfeature.dao.Purchase;
 import com.pos.inventoryfeature.dao.Supplier;
 import com.pos.retailfeature.dao.product.Product;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Index;
+import jakarta.persistence.Version;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.GenerationType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +31,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class StockEntry {
+
+    @Version
+    @Column(nullable = false)
+    private Long version = 0L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

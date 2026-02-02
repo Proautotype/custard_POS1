@@ -3,6 +3,8 @@ package com.pos.core.service;
 import com.pos.base.ui.component.CustomeNotification;
 import com.pos.retailfeature.events.CartChangeEvent;
 import com.pos.retailfeature.subcomponent.ReceiptItem;
+import com.pos.shared.StaticUtils;
+import com.pos.shared.Utils;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.data.provider.ListDataProvider;
@@ -27,6 +29,7 @@ import java.util.Locale;
 @Tag(value = "cartstate")
 public class CartState extends com.vaadin.flow.component.Component {
 
+    private String currentSaleid = "";
     private final CustomeNotification customeNotification = new CustomeNotification();
 
     private final List<ReceiptItem> cart = new ArrayList<>();
@@ -41,12 +44,17 @@ public class CartState extends com.vaadin.flow.component.Component {
     }
 
     public void start() {
-        cart.clear();
-        customer = new Customer();
+        clear();
+
     }
 
     public void clear() {
         cart.clear();
+        dataProvider.refreshAll();
+        fireEvent(new CartChangeEvent(this));
+        customer = new Customer();
+        discount = 0;
+        currentSaleid = "SALE-".concat(StaticUtils.generateIdentifier(12, "-"));
     }
 
     public void addToCart(ReceiptItem receiptItem) {
@@ -76,6 +84,7 @@ public class CartState extends com.vaadin.flow.component.Component {
 
     public void removeFromCart(String itemName) {
         cart.removeIf(item -> item.getName().equals(itemName));
+        dataProvider.refreshAll();
         fireEvent(new CartChangeEvent(this));
     }
 
@@ -100,6 +109,7 @@ public class CartState extends com.vaadin.flow.component.Component {
     }
 
     public String formatMoney(BigDecimal amount) {
+
         return NumberFormat.getCurrencyInstance(Locale.CANADA).format(amount);
     }
 
@@ -108,7 +118,7 @@ public class CartState extends com.vaadin.flow.component.Component {
     }
 
     public double getDiscount() {
-        return discount;
+        return discount != 0 ? discount : 0;
     }
 
     public void setDiscount(double discount) {

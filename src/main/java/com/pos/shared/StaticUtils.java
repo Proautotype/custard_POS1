@@ -2,25 +2,17 @@ package com.pos.shared;
 
 import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Value;
-
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.icon.VaadinIcon;
-
-import com.vaadin.flow.component.Component;
-
 import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.text.DecimalFormat;
 
-@org.springframework.stereotype.Component
-public class Utils {
+public class StaticUtils {
 
     static final String ALPHANUMERIC = "123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     static final SecureRandom RANDOM = new SecureRandom();
 
     @Value("${app.currency}")
-    private String currency;
+    private static String currency;
 
     public static String generateIdentifier(int n, String delimiter) {
         if (n < 8) throw new IllegalArgumentException("Length must be at least 1");
@@ -39,17 +31,10 @@ public class Utils {
         return total.subtract(discountPercent);
     }
 
-    public String cedisCurrencyFormat(BigDecimal amount) {
-        DecimalFormat formatter = new DecimalFormat(currency + "#,##0.00");
-        return formatter.format(amount);
-    }
-
-     
-    public Component visualComponent(String name, VaadinIcon icon) {
-        Button action = new Button(name);
-        action.setPrefixComponent(icon.create());
-        action.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
-        return action;  
+    public static String cedisNumberFormatter(BigDecimal amount) {
+        DecimalFormat formatter = new DecimalFormat("¢ #,##0.00");
+        String currency = formatter.format(amount);
+        return currency;
     }
 
 }

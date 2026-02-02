@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface StockEntryRepository extends JpaRepository<StockEntry, Long> {
@@ -73,5 +74,34 @@ public interface StockEntryRepository extends JpaRepository<StockEntry, Long> {
             """
     )
     int count(@Param("searchTerm") String searchTerm);
+
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("""
+        SELECT s 
+        FROM StockEntry s
+        WHERE s.product.id = :productId
+            AND (s.quantityReceived - s.quantitySoldFromThisBatch) > 0 
+            AND s.expiryDate > :today
+        ORDER BY s.expiryDate ASC, s.arrivalDate ASC
+         """)
+    List<StockEntry> findAvailableBatchesForSale(
+        @Param("productId") String productId,
+        @Param("today") LocalDate today
+    );
+
+    @Query("""
+        SELECT (SUM(s.quantityReceived - s.quantitySoldFromThisBatch))
+        FROM StockEntry s
+        WHERE s.product.id = :productId
+            AND (s.quantityReceived - s.quantitySoldFromThisBatch) > 0
+    """)
+    Long calculateAvailableProductStockEntry(@Param("productId") String productId);
+
+    @Query("""
+            SELECT s FROM StockEntry s
+            WHERE s.id = :batchId
+        """)
+    Optional<StockEntry> findBatchForAdjustment(@Param("batchId") Long batchId);
 
 }

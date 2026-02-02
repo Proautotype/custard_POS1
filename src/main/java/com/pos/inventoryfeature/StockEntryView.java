@@ -11,6 +11,7 @@ import com.pos.inventoryfeature.service.provider.DrugDosageFormDataProvider;
 import com.pos.inventoryfeature.service.provider.PurchaseDataProvider;
 import com.pos.inventoryfeature.service.provider.SupplierDataProvider;
 import com.pos.inventoryfeature.ui.CreateSupplierView;
+import com.pos.retailfeature.dao.sale.Sale;
 import com.pos.retailfeature.dto.ProductDto;
 import com.pos.retailfeature.service.ProductService;
 import com.pos.retailfeature.service.providers.GenericProductDataProvider;
@@ -27,6 +28,7 @@ import com.vaadin.flow.component.details.Details;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.FieldSet;
 import com.vaadin.flow.component.html.H4;
@@ -72,18 +74,12 @@ public class StockEntryView extends Dialog {
     // Add a cache field
     private Map<String, Purchase> purchaseCache = new HashMap<>();
 
-    Grid<StockEntryDto> stockEntryGrid;
-
     private final ProductDataProvider productDataProvider;
-    private final GenericProductDataProvider genericProductDataProvider;
-    private final DrugDosageFormDataProvider dosageFormDataProvider;
     private final CreateProductView createProductDialog;
     private final CreateSupplierView createSupplierViewDialog;
 
     private final SupplierDataProvider supplierDataProvider;
     private final SupplierService supplierService;
-    private final StockEntryService stockEntryService;
-    private final PurchaseDataProvider purchaseDataProvider;
     private final ProductService productService;
     private final PurchaseRepository purchaseRepository;
     private final StockMapper stockMapper;
@@ -111,6 +107,7 @@ public class StockEntryView extends Dialog {
 
     final String notice = "Current selling price, if changed will affect the item's selling price throughout the store(application). Thus change it only if selling price has also changed.";
     String supplierInputTxt = "";
+    Utils utils = new Utils();
 
     @PostConstruct
     private void init() {
@@ -220,10 +217,14 @@ public class StockEntryView extends Dialog {
     }
 
     private VerticalLayout dataview() {
-        stockEntryGrid = new Grid<>();
+        Grid<StockEntryDto> stockEntryGrid = new Grid<>(StockEntryDto.class, false);
         stockEntryGrid.setDataProvider(listDataProvider);
-        stockEntryGrid.setMultiSort(true);
         stockEntryGrid.setHeightFull();
+
+        GridContextMenu<StockEntryDto> menu = stockEntryGrid.addContextMenu();
+        menu.addSeparator();
+        menu.addItem(utils.visualComponent("View", VaadinIcon.EYE), 
+        event -> {});
 
         VerticalLayout contentLayout = new VerticalLayout();
 
@@ -382,7 +383,6 @@ public class StockEntryView extends Dialog {
 
     }
 
-
     /**
      * Get purchase from cache, or fetch from database if not cached
      */
@@ -403,6 +403,12 @@ public class StockEntryView extends Dialog {
      */
     private void clearPurchaseCache() {
         purchaseCache.clear();
+    }
+
+    Component visualComponent(String name, VaadinIcon icon) {
+        Button action = new Button(name, icon.create());
+        action.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
+        return action;
     }
 
 }

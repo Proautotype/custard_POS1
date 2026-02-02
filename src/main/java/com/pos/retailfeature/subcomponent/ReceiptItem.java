@@ -14,6 +14,7 @@ public class ReceiptItem {
     private BigDecimal unitPrice = BigDecimal.ZERO;
     private int quantity = 0;
     private BigDecimal totalPrice = BigDecimal.ZERO;
+    private String productId;
 
     public ReceiptItem(){
         id = UUID.randomUUID().toString();

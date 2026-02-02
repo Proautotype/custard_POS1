@@ -4,11 +4,15 @@ import com.pos.inventoryfeature.dao.stock.StockEntry;
 import com.pos.retailfeature.dao.product.Product;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "sale_items")
+@Getter
+@Setter
 public class SaleItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

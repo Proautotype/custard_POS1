@@ -5,6 +5,7 @@ import com.pos.core.service.CartState;
 import com.pos.retailfeature.service.providers.StockDataProvider;
 import com.pos.retailfeature.subcomponent.DisplayView;
 import com.pos.retailfeature.subcomponent.ReceiptView;
+import com.pos.shared.Utils;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.avatar.Avatar;
@@ -32,10 +33,13 @@ public class RetailView extends VerticalLayout implements HasDynamicHeader {
     private final StockDataProvider dataProvider;
     private int currentColumns = 2;
     private final DisplayView displayView;
-    private final ReceiptView receiptView;
+    private ReceiptView receiptView;
+    private Utils utils;
 
-    RetailView(StockDataProvider dataProvider, CartState cartState) {
+    RetailView(StockDataProvider dataProvider, CartState cartState, Utils utils) {
         this.dataProvider = dataProvider;
+        this.utils = utils;
+        this.receiptView = new ReceiptView(cartState, utils);
 
         setWidthFull();
         setHeightFull();
@@ -47,7 +51,6 @@ public class RetailView extends VerticalLayout implements HasDynamicHeader {
         VerticalLayout leftSection = leftSection();
         leftSection.setMaxWidth("70%");
 
-        receiptView = new ReceiptView(cartState);
         receiptView.setMaxWidth("30%");
 
         VerticalLayout footer = new VerticalLayout();

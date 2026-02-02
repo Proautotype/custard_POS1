@@ -1,6 +1,7 @@
 package com.pos.retailfeature.subcomponent;
 
 import com.pos.core.service.CartState;
+import com.pos.shared.Utils;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -18,6 +19,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.data.provider.ListDataProvider;
+import com.vaadin.flow.spring.annotation.VaadinSessionScope;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,16 +29,21 @@ import java.text.NumberFormat;
 import static com.pos.shared.Utils.calculateDiscount;
 
 @Slf4j
+@org.springframework.stereotype.Component
+@VaadinSessionScope
 public class ReceiptView extends VerticalLayout {
     private final H2 totalSpan = new H2("0");
     private final CartState cartState;
+    private final Utils utils;
+
     Button checkoutButton;
     NumberField discountTxt = new NumberField();
     Span subTotalTxt = new Span();
 
-    public ReceiptView(CartState cartState) {
+    public ReceiptView(CartState cartState, Utils utils) {
         final Grid<ReceiptItem> receiptGrid = new Grid<>(ReceiptItem.class, false);
         this.cartState = cartState;
+        this.utils = utils;
         updateTotal();
 
         discountTxt.setMin(0.0);
@@ -155,6 +162,7 @@ public class ReceiptView extends VerticalLayout {
             IntegerField qty = new IntegerField();
             qty.setWidth("112px");
             qty.setMin(1);
+            qty.setMax(100);
             qty.setStepButtonsVisible(true);
             qty.setValue(item.getQuantity());
 
@@ -201,19 +209,15 @@ public class ReceiptView extends VerticalLayout {
                 .map(ReceiptItem::getTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        totalSpan.setText(formatMoney(total));
-    }
-
-    private String formatMoney(BigDecimal amount) {
-        return NumberFormat.getCurrencyInstance().format(amount);
+        totalSpan.setText(utils.cedisCurrencyFormat(total));
     }
 
     public void updateTotal() {
         BigDecimal total = this.cartState.getTotal();
         BigDecimal discountedTotal = calculateDiscount(cartState.getDiscount(), total);
 
-        subTotalTxt.setText(formatMoney(total));
-        totalSpan.setText(formatMoney(discountedTotal));
+        subTotalTxt.setText(utils.cedisCurrencyFormat(total));
+        totalSpan.setText(utils.cedisCurrencyFormat(discountedTotal));
     }
 
 

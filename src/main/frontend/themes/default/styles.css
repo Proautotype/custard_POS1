@@ -38,3 +38,14 @@
 .receipt-area {
     font-family: monospace;
 }
+
+@keyframes flash {
+  0%   { background-color: var(--lumo-primary-color-10pct); }
+  50%  { background-color: var(--lumo-primary-color-30pct); }
+  100% { background-color: transparent; }
+}
+
+.flash {
+  animation: flash 1.5s ease-in-out 2;
+  border-radius: var(--lumo-border-radius-m);
+}

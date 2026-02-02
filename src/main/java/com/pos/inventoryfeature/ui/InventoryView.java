@@ -2,11 +2,11 @@ package com.pos.inventoryfeature.ui;
 
 import com.pos.base.ui.HasDynamicHeader;
 import com.pos.inventoryfeature.StockEntryView;
+import com.pos.inventoryfeature.dao.Purchase;
 import com.pos.inventoryfeature.service.StockEntryService;
-import com.pos.inventoryfeature.service.provider.DrugDosageFormDataProvider;
-import com.pos.retailfeature.dao.product.Product;
-import com.pos.retailfeature.service.providers.GenericProductDataProvider;
-import com.pos.retailfeature.service.providers.ProductDataProvider;
+import com.pos.inventoryfeature.service.provider.PurchaseDataProvider;
+import com.pos.shared.StaticUtils;
+import com.pos.shared.Utils;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -24,6 +24,11 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.ObjectProvider;
 
 @Slf4j
@@ -34,17 +39,15 @@ import org.springframework.beans.factory.ObjectProvider;
 @RequiredArgsConstructor
 public class InventoryView extends VerticalLayout implements HasDynamicHeader {
     private final StockEntryView stockEntryView;
-    private final ProductDataProvider dataProvider;
-    private final GenericProductDataProvider genericProductDataProvider;
-    private final DrugDosageFormDataProvider dosageFormDataProvider;
-    private final ObjectProvider<StockEntryService> stockEntryServiceObjectProvider;
+    private final PurchaseDataProvider purchaseDataProvider;
+    private final Utils utils;
 
     NumberField productSellingPriceField = new NumberField("Selling Price");
 
     @PostConstruct
     private void init() {
         setupStock();
-        add(titleArea(), searchArea(), productView(), stockEntryView);
+        add(titleArea(), searchArea(), purchaseView(), stockEntryView);
     }
 
     private void setupStock() {
@@ -98,14 +101,34 @@ public class InventoryView extends VerticalLayout implements HasDynamicHeader {
         return content;
     }
 
-    private Component productView() {
+    private Component purchaseView() {
         VerticalLayout contentLayout = new VerticalLayout();
 
-        Grid<Product> gridView = new Grid<>();
-        gridView.setMultiSort(true);
-        gridView.setHeightFull();
+        Grid<Purchase> purchaseGrid = new Grid<>();
+        purchaseGrid.setMultiSort(true);
+        purchaseGrid.setHeightFull();
+        purchaseGrid.setDataProvider(purchaseDataProvider);
 
-        contentLayout.add(gridView);
+        purchaseGrid.addColumn(Purchase::getId).setHeader("ID");
+        purchaseGrid.addColumn(Purchase::getSupplierInvoiceNumber).setHeader("Invoice Number");
+        purchaseGrid
+        .addColumn(args -> {
+            
+            return args.getArrivalDate() == null ? "Not Recorded" : args.getArrivalDate().format(DateTimeFormatter.BASIC_ISO_DATE);
+
+        })
+        .setHeader("Arrival Date");
+        purchaseGrid.addColumn(args-> args.getStockEntries().size()).setHeader("Number of Items");
+        purchaseGrid.addColumn(args ->  {
+            return StaticUtils.cedisNumberFormatter(
+                args.getTotalInvoiceAmount() != null ? args.getTotalInvoiceAmount() : BigDecimal.valueOf(0) 
+            );
+        }).setHeader("Cost Amount");
+
+        contentLayout.add(purchaseGrid);
+        purchaseGrid.setSizeFull();
+        contentLayout.setWidthFull();
+        contentLayout.setHeight("400px");
         return contentLayout;
     }
 

@@ -41,7 +41,7 @@ public class Product {
 
     // Helper method to get total stock across all dates
     // Add this inside Product class for high-performance sorting/filtering
-    @org.hibernate.annotations.Formula("(SELECT COALESCE(SUM(s.quantity_received - s.quantity_sold_from_this_batch), 0) FROM stock_entries s WHERE s.product_id = id)")
+    @org.hibernate.annotations.Formula("(SELECT COALESCE(SUM(s.quantity_received - s.quantity_sold_from_this_batch), 0) FROM stock_entry s WHERE s.product_id = id)")
     private Integer totalStockLeft;
 
     public String getId() {

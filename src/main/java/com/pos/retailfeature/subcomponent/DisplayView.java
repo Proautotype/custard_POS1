@@ -77,7 +77,7 @@ public class DisplayView extends VerticalLayout {
             addToCartBtn.setWidthFull();
             addToCartBtn.addClickListener(buttonClickEvent -> {
                 ReceiptItem newItem = new ReceiptItem();
-                newItem.setId(product.productId());
+                newItem.setProductId(product.productId());
                 newItem.setName(product.productName());
                 newItem.setQuantity(1);
                 newItem.setTotalPrice(product.sellingPrice());

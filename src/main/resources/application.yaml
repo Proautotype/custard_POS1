@@ -6,6 +6,7 @@ app:
     - "Supplements"
     - "First Aid"
     - "Beauty"
+  currency: ¢
 
 server:
   port: ${PORT:8080}
