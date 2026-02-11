@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: seed-generics-002
+      author: gemini
+      context: dev
+      changes:
+        - loadData:
+            tableName: generic_products
+            file: db/data/generics.csv
+            encoding: UTF-8
+            columns:
+              - column: { name: id, type: UUID }
+              - column: { name: is_pharmaceutical, type: BOOLEAN }
+              - column: { name: requires_prescription, type: BOOLEAN }

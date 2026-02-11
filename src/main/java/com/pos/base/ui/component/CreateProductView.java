@@ -46,13 +46,13 @@ public class CreateProductView extends Dialog {
     private final DrugDosageFormDataProvider dosageFormDataProvider;
 
     private final Checkbox closeAfterSaveChkbx = new Checkbox("Close after save", true);
-    private final TextField nameTxt  = new TextField("Provide Name");
+    private final TextField nameTxt = new TextField("Provide Name");
     private final TextArea descriptionTxt = new TextArea("Provide Description (Optional)");
-    private final ComboBox<ViewGenericProductDto> genericsCbx =  new ComboBox<>("Select Product Type");
+    private final ComboBox<ViewGenericProductDto> genericsCbx = new ComboBox<>("Select Product Type");
     private final ComboBox<DrugDosageForm> dosageFormCbx = new ComboBox<>("Select Dosage Form");
     private final TextField strengthTxt = new TextField("Strength");
     private final NumberField currentSellingPriceNf = new NumberField("Provide Selling Price");
-    private final Checkbox isPharmaceuticalChkbx  = new Checkbox("Is Pharmaceutical?", true);
+    private final Checkbox isPharmaceuticalChkbx = new Checkbox("Is Pharmaceutical?", false);
     private final Button createBtn = new Button("Create Product");
     private final Button exitBtn = new Button("Exit View");
     private final FieldSet fieldSetPharma = new FieldSet("Pharmaceutical Information");
@@ -63,6 +63,8 @@ public class CreateProductView extends Dialog {
         setWidth("40vw");
 
         nameTxt.setWidthFull();
+
+        fieldSetPharma.setVisible(false);
 
         descriptionTxt.setWidthFull();
         genericsCbx.setWidthFull();
@@ -98,12 +100,10 @@ public class CreateProductView extends Dialog {
         setupDosageFormCombobox();
     }
 
-
-
     void setupControls() {
         // checkbox
-        isPharmaceuticalChkbx.addValueChangeListener(changeEvent ->
-                toggleElementActiveness(changeEvent.getValue(), fieldSetPharma));
+        isPharmaceuticalChkbx
+                .addValueChangeListener(changeEvent -> toggleElementActiveness(changeEvent.getValue(), fieldSetPharma));
         // buttons
         createBtn.addClickListener(event -> {
             String productName = nameTxt.getValue();
@@ -111,45 +111,43 @@ public class CreateProductView extends Dialog {
             ViewGenericProductDto genericProductId = genericsCbx.getValue();
             String strength = strengthTxt.getValue();
 
-            if(productName.isBlank()){
+            if (productName.isBlank()) {
                 createReportError("Please enter the product name.").open();
                 return;
             }
 
-            if(Boolean.TRUE.equals(isPharmaceuticalChkbx.getValue())){
+            if (Boolean.TRUE.equals(isPharmaceuticalChkbx.getValue())) {
 
-                if(genericProductId== null){
+                if (genericProductId == null) {
                     createReportError("Please select generic product to which this product belong.").open();
                     return;
                 }
-                if(dosageForm == null){
+                if (dosageForm == null) {
                     createReportError("Please select product dosage form.").open();
                     return;
                 }
-                if(strength.isBlank()){
+                if (strength.isBlank()) {
                     createReportError("Please provide drug strength").open();
                     return;
                 }
             }
 
-
-
             ProductDto productDataDto = new ProductDto(
                     productName,
                     descriptionTxt.getValue(),
                     genericProductId.getId(),
-                    dosageForm.getName(),
+                    dosageForm != null ? dosageForm.getName() : null,
                     strength,
-                    BigDecimal.valueOf(currentSellingPriceNf.getValue() != null ? currentSellingPriceNf.getValue() : 0L)
-            );
-            log.info("To store {}",productDataDto.toString());
+                    BigDecimal
+                            .valueOf(currentSellingPriceNf.getValue() != null ? currentSellingPriceNf.getValue() : 0L));
+            log.info("To store {}", productDataDto.toString());
             viewProgressBar.setIndeterminate(true);
             saveProduct(productDataDto);
         });
-        exitBtn.addClickListener(event ->  this.close());
+        exitBtn.addClickListener(event -> this.close());
     }
 
-    void setupGenericCombobox(){
+    void setupGenericCombobox() {
         genericsCbx.setItemLabelGenerator(ViewGenericProductDto::getName);
         genericsCbx.setDataProvider(genericProductDataProvider, filterText -> {
             genericProductDataProvider.setFilter(filterText);
@@ -157,10 +155,10 @@ public class CreateProductView extends Dialog {
         });
     }
 
-    void setupDosageFormCombobox(){
+    void setupDosageFormCombobox() {
         dosageFormCbx.setItemLabelGenerator(DrugDosageForm::getName);
         dosageFormCbx.setDataProvider(dosageFormDataProvider, filterTxt -> {
-//                dosageFormDataProvider
+            // dosageFormDataProvider
             return filterTxt;
         });
     }
@@ -174,14 +172,14 @@ public class CreateProductView extends Dialog {
     void saveProduct(ProductDto data) {
         productDataProvider.createProduct(data);
         log.info("Create Product Complete {} \n ", data.toString());
-        Notification.show("Product ("+data.getName()+") created successfully", 2000, Notification.Position.MIDDLE);
-        if(Boolean.TRUE.equals(closeAfterSaveChkbx.getValue())){
-           close();
+        Notification.show("Product (" + data.getName() + ") created successfully", 2000, Notification.Position.MIDDLE);
+        if (Boolean.TRUE.equals(closeAfterSaveChkbx.getValue())) {
+            close();
         }
         clearElements();
     }
 
-    void clearElements(){
+    void clearElements() {
         nameTxt.clear();
         descriptionTxt.clear();
         strengthTxt.clear();
@@ -200,7 +198,7 @@ public class CreateProductView extends Dialog {
                 closeBtn);
         layout.setAlignItems(FlexComponent.Alignment.CENTER);
 
-        closeBtn.addClickListener(event ->  notification.close());
+        closeBtn.addClickListener(event -> notification.close());
         notification.add(layout);
 
         return notification;

@@ -3,16 +3,18 @@ package com.pos.inventoryfeature.ui;
 import com.pos.base.ui.HasDynamicHeader;
 import com.pos.inventoryfeature.StockEntryView;
 import com.pos.inventoryfeature.dao.Purchase;
-import com.pos.inventoryfeature.service.StockEntryService;
+
 import com.pos.inventoryfeature.service.provider.PurchaseDataProvider;
 import com.pos.shared.StaticUtils;
 import com.pos.shared.Utils;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
@@ -20,23 +22,18 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.UIScope;
-import jakarta.annotation.PostConstruct;
 import jakarta.annotation.security.RolesAllowed;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import org.springframework.beans.factory.ObjectProvider;
 
 @Slf4j
 @UIScope
 @PageTitle("inventory")
 @Route("/inventory")
 @RolesAllowed("ADMIN")
-@RequiredArgsConstructor
+// @RequiredArgsConstructor
 public class InventoryView extends VerticalLayout implements HasDynamicHeader {
     private final StockEntryView stockEntryView;
     private final PurchaseDataProvider purchaseDataProvider;
@@ -44,9 +41,15 @@ public class InventoryView extends VerticalLayout implements HasDynamicHeader {
 
     NumberField productSellingPriceField = new NumberField("Selling Price");
 
-    @PostConstruct
-    private void init() {
-        setupStock();
+    public InventoryView(StockEntryView stockEntryView, PurchaseDataProvider purchaseDataProvider, Utils utils) {
+        this.stockEntryView = stockEntryView;
+        this.purchaseDataProvider = purchaseDataProvider;
+        this.utils = utils;
+        setPadding(true);
+        setSpacing(true);
+        setSizeFull();
+
+         setupStock();
         add(titleArea(), searchArea(), purchaseView(), stockEntryView);
     }
 
@@ -71,7 +74,7 @@ public class InventoryView extends VerticalLayout implements HasDynamicHeader {
         totalItems.getElement().getThemeList().add("badge secondary");
 
         statBoard.add(totalItems, stock);
-        content.setJustifyContentMode(JustifyContentMode.BETWEEN);
+        content.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
         content.add(header, statBoard);
         return content;
     }
@@ -124,6 +127,13 @@ public class InventoryView extends VerticalLayout implements HasDynamicHeader {
                 args.getTotalInvoiceAmount() != null ? args.getTotalInvoiceAmount() : BigDecimal.valueOf(0) 
             );
         }).setHeader("Cost Amount");
+
+        GridContextMenu<Purchase> contextMenu = purchaseGrid.addContextMenu();
+        contextMenu.addItem("View Details", event -> {
+            event.getItem().ifPresent(purchase -> {
+                log.info("viewing purchase details {}", purchase.getId());
+            }); // 
+        });
 
         contentLayout.add(purchaseGrid);
         purchaseGrid.setSizeFull();

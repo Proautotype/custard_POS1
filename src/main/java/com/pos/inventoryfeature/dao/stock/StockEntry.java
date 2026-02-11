@@ -51,6 +51,7 @@ public class StockEntry {
     private LocalDate expiryDate; // Critical for Pharmacy (Rx/OTC)
 
     private String batchNumber; // e.g., "LOT-2024-X"
+    private BigDecimal costPrice;         // Cost price per unit for THIS batch
 
     private BigDecimal unitCostPrice;       // What you paid the supplier for THIS batch
     private BigDecimal totalBatchCost;      // unitCostPrice * quantityReceived

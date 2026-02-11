@@ -5,16 +5,14 @@ import com.pos.inventoryfeature.dao.Purchase;
 import com.pos.inventoryfeature.dao.PurchaseRepository;
 import com.pos.inventoryfeature.dao.stock.StockEntry;
 import com.pos.inventoryfeature.dto.SupplierDto;
-import com.pos.inventoryfeature.service.StockEntryService;
+
 import com.pos.inventoryfeature.service.SupplierService;
-import com.pos.inventoryfeature.service.provider.DrugDosageFormDataProvider;
-import com.pos.inventoryfeature.service.provider.PurchaseDataProvider;
+
 import com.pos.inventoryfeature.service.provider.SupplierDataProvider;
 import com.pos.inventoryfeature.ui.CreateSupplierView;
-import com.pos.retailfeature.dao.sale.Sale;
+
 import com.pos.retailfeature.dto.ProductDto;
 import com.pos.retailfeature.service.ProductService;
-import com.pos.retailfeature.service.providers.GenericProductDataProvider;
 import com.pos.retailfeature.service.providers.ProductDataProvider;
 import com.pos.shared.SpaceBetween;
 import com.pos.shared.StockMapper;
@@ -57,22 +55,18 @@ import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
 
 @SpringComponent
 @UIScope
 @RequiredArgsConstructor
 public class StockEntryView extends Dialog {
 
-    private final String PURCHASE_ID = "PURCHASE_".concat(Utils.generateIdentifier(8, "_"));
+    private String PURCHASE_ID = "PURCHASE_".concat(Utils.generateIdentifier(8, "_"));
     String batch = Utils.generateIdentifier(8, "_");
     String SUPPLIER_ID = "";
     private final Logger log = LoggerFactory.getLogger(StockEntryView.class);
-
-    // Add a cache field
-    private Map<String, Purchase> purchaseCache = new HashMap<>();
 
     private final ProductDataProvider productDataProvider;
     private final CreateProductView createProductDialog;
@@ -83,6 +77,8 @@ public class StockEntryView extends Dialog {
     private final ProductService productService;
     private final PurchaseRepository purchaseRepository;
     private final StockMapper stockMapper;
+
+    private Purchase purchase;
 
     // views
     ProgressBar viewProgressBar = new ProgressBar();
@@ -97,9 +93,9 @@ public class StockEntryView extends Dialog {
     TextArea productDescField = new TextArea("Note");
     DatePicker arrivalDate;
     DatePicker expiryDate;
-    List<StockEntryDto> stocks = new ArrayList<>();
 
-    ListDataProvider<StockEntryDto> listDataProvider;
+    Grid<StockEntry> stockEntryGrid = new Grid<>(StockEntry.class, false);
+    ListDataProvider<StockEntry> stockProvider;
 
     Button createProductBtn = new Button("Create new product", VaadinIcon.BARCODE.create());
     Button createStockBtn = new Button("Create Stock", VaadinIcon.STOCK.create());
@@ -117,11 +113,11 @@ public class StockEntryView extends Dialog {
         setModal(true);
 
         createSupplierBtn.setTooltipText("Click here, to create a new supplier");
-
         createProductBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        listDataProvider = new ListDataProvider<>(stocks);
-
         quantityReceivedField.setStepButtonsVisible(true);
+
+        createPurchase(PURCHASE_ID);
+        viewPurchase(purchase);
 
         HorizontalLayout actions = new HorizontalLayout();
         createStockBtn.setPrefixComponent(VaadinIcon.ENTER.create());
@@ -196,35 +192,27 @@ public class StockEntryView extends Dialog {
         add(mainContent, createProductDialog, createSupplierViewDialog);
         setupCreateProductDialog();
 
-        try {
-            Purchase purchase = new Purchase();
-            purchase.setId(PURCHASE_ID);
-            purchaseRepository.saveAndFlush(purchase);
-        } catch (Exception e) {
-            log.info(e.getLocalizedMessage());
-        }
-
-        addDialogCloseActionListener(arg0 -> {
-            onDestroy();
-        });
-
     }
 
-    void onDestroy() {
-        purchaseRepository.findPurchaseById(PURCHASE_ID).ifPresent(purchase -> {
-            purchaseRepository.delete(purchase);
-        });
+    private void viewPurchase(Purchase purchase2) {
+
     }
 
     private VerticalLayout dataview() {
-        Grid<StockEntryDto> stockEntryGrid = new Grid<>(StockEntryDto.class, false);
-        stockEntryGrid.setDataProvider(listDataProvider);
         stockEntryGrid.setHeightFull();
 
-        GridContextMenu<StockEntryDto> menu = stockEntryGrid.addContextMenu();
+        stockEntryGrid.addColumn(StockEntry::getBatchNumber).setHeader("Batch Number");
+        stockEntryGrid.addColumn(args -> args.getProduct().getName()).setHeader("Product");
+        stockEntryGrid.addColumn(StockEntry::getQuantityReceived).setHeader("Quantity Received");
+        stockEntryGrid.addColumn(StockEntry::getCostPrice).setHeader("Cost Price");
+        stockEntryGrid.addColumn(StockEntry::getArrivalDate).setHeader("Arrival Date");
+        stockEntryGrid.addColumn(StockEntry::getExpiryDate).setHeader("Expiry Date");
+
+        GridContextMenu<StockEntry> menu = stockEntryGrid.addContextMenu();
         menu.addSeparator();
-        menu.addItem(utils.visualComponent("View", VaadinIcon.EYE), 
-        event -> {});
+        menu.addItem(utils.visualComponent("View", VaadinIcon.EYE),
+                event -> {
+                });
 
         VerticalLayout contentLayout = new VerticalLayout();
 
@@ -233,9 +221,7 @@ public class StockEntryView extends Dialog {
         headerLayout.add(new H4("Total"));
         headerLayout.getStyle().setBoxShadow("rgba(0, 0, 0, 0.16) 0px 1px 4px").setWidth("100%").setPadding("10px");
 
-        contentLayout.add(
-                stockEntryGrid,
-                createProductDialog);
+        contentLayout.add(stockEntryGrid, createProductDialog);
 
         return contentLayout;
     }
@@ -342,14 +328,65 @@ public class StockEntryView extends Dialog {
     @Transactional
     void createStock() {
 
+        StockEntryDto stockEntryDto = getStockEntryDto();
+        ProductDto productsCbxValue = productsCbx.getValue();
+        Double currentSellingPrice = currentSellingPriceField.getValue();
+
+        if (productsCbxValue == null || currentSellingPrice == null) {
+            Notification.show("Select Product, it's current selling price cannot be empty");
+            return;
+        }
+
+        try {
+            StockEntry stockEntry = stockMapper.toEntity(stockEntryDto);
+            stockEntry.setSupplier(supplierService.findById(stockEntryDto.getSupplierId()).orElseThrow());
+            stockEntry.setProduct(productService.findById(productsCbxValue.getId()).orElseThrow());
+
+            purchase.addStockEntry(stockEntry);
+            purchaseRepository.save(purchase);
+            productService.updateProductSellingPrice(productsCbxValue.getId(), currentSellingPrice);
+            stockProvider.refreshAll();
+            log.info("stock created successfully {} ", stockEntry.getId());
+            Notification.show("Stock created");
+
+        } catch (Exception e) {
+            log.info(e.getLocalizedMessage());
+        }
+
+    }
+
+    /**
+     * Get purchase from cache, or fetch from database if not cached
+     */
+    private Purchase createPurchase(String purchaseId) {
+        purchase = purchaseRepository.findById(purchaseId).orElseGet(() -> {
+            Purchase newPurchase = new Purchase();
+            newPurchase.setId(purchaseId);
+            return newPurchase;
+        });
+        stockProvider = new ListDataProvider<>(purchase != null ? purchase.getStockEntries() : new ArrayList<>());
+        stockEntryGrid.setDataProvider(stockProvider);
+        return purchase;
+    }
+
+    Component visualComponent(String name, VaadinIcon icon) {
+        Button action = new Button(name, icon.create());
+        action.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
+        return action;
+    }
+
+    public void setPurchaseId(String purchaseId) {
+        log.info("Setting purchase id to {} ", purchaseId);
+        this.PURCHASE_ID = purchaseId;
+    }
+
+    StockEntryDto getStockEntryDto() {
         String supplierID = suppliersCbx.getValue().getId();
         String batchNumberValue = batchNumber.getValue();
         int quantityReceivedValue = quantityReceivedField.getValue().intValue();
         String descFieldValue = productDescField.getValue();
         LocalDate arrivalDateValue = arrivalDate.getValue();
         LocalDate expiryDateValue = expiryDate.getValue();
-        ProductDto productsCbxValue = productsCbx.getValue();
-        Double currentSellingPrice = currentSellingPriceField.getValue();
 
         StockEntryDto stockEntryDto = StockEntryDto.builder()
                 .batchNumber(batchNumberValue)
@@ -361,54 +398,7 @@ public class StockEntryView extends Dialog {
                 .supplierId(supplierID)
                 .build();
 
-        if (productsCbxValue == null || currentSellingPrice == null) {
-            Notification.show("Select Product, it's current selling price cannot be empty");
-            return;
-        }
-
-        try {
-            StockEntry stockEntry = stockMapper.toEntity(stockEntryDto);
-            stockEntry.setSupplier(supplierService.findById(supplierID).orElseThrow());
-            stockEntry.setProduct(productService.findById(productsCbxValue.getId()).orElseThrow());
-
-            Purchase _purchase = getPurchaseFromCache(PURCHASE_ID);
-            _purchase.addStockEntry(stockEntry);
-            purchaseRepository.saveAndFlush(_purchase);
-            productService.updateProductSellingPrice(productsCbxValue.getId(), currentSellingPrice);
-            log.info("stock created successfully {} ", stockEntry.getId());
-
-        } catch (Exception e) {
-            log.info(e.getLocalizedMessage());
-        }
-
-    }
-
-    /**
-     * Get purchase from cache, or fetch from database if not cached
-     */
-    private Purchase getPurchaseFromCache(String purchaseId) {
-        if (purchaseCache.containsKey(purchaseId)) {
-            return purchaseCache.get(purchaseId);
-        }
-
-        Purchase purchase = purchaseRepository.findById(purchaseId).orElse(null);
-        if (purchase != null) {
-            purchaseCache.put(purchaseId, purchase);
-        }
-        return purchase;
-    }
-
-    /**
-     * Clear cache when dialog is closed or data is saved
-     */
-    private void clearPurchaseCache() {
-        purchaseCache.clear();
-    }
-
-    Component visualComponent(String name, VaadinIcon icon) {
-        Button action = new Button(name, icon.create());
-        action.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
-        return action;
+        return stockEntryDto;
     }
 
 }

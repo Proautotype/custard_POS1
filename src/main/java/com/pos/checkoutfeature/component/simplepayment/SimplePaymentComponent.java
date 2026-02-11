@@ -64,8 +64,19 @@ public class SimplePaymentComponent extends VerticalLayout {
         amountField.addValueChangeListener(e -> {
             if (listener != null) {
                 listener.onAmountChanged(e.getValue());
+                changNumberField.setValue(e.getValue() - payable);
             }
         });
+
+        changNumberField.addValueChangeListener(e -> {
+            if(e.getValue() < 0) {
+                changNumberField.setInvalid(true);
+                changNumberField.setErrorMessage("Amount is less than payable");
+            } else {
+                changNumberField.setInvalid(false);
+            }
+        });
+
         cardField.addValueChangeListener(e -> {
             if (listener != null) {
                 listener.onMobileNumberChanged(e.getValue());
@@ -73,8 +84,17 @@ public class SimplePaymentComponent extends VerticalLayout {
         });
         confirm.addClickListener(e -> {
 
-            if(amountField.getValue() == null) {
-                Notification.show("Please enter amount").open();
+
+
+            if(amountField.getValue() == null || amountField.getValue() <= 0 || changNumberField.isInvalid() || amountField.getValue() < payable) {
+                // Notification.show("Please enter valida amount").open();
+                Dialog errorDialog = new Dialog();
+                errorDialog.setHeaderTitle("Invalid amount");
+                errorDialog.add("Please enter a valid amount that is greater than or equal to the payable amount.");
+                Button closeBtn = new Button("Close", event -> errorDialog.close());
+                closeBtn.getThemeNames().add("error");
+                errorDialog.add(closeBtn);
+                errorDialog.open();
                 flash(amountField);
                 return;
             }

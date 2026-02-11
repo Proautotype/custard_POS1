@@ -1,6 +1,34 @@
 id,name,is_pharmaceutical,requires_prescription,category,warning
-550e8400-e29b-41d4-a716-446655440001,Amoxicillin,true,true,Prescription (Rx),Finish the course
-550e8400-e29b-41d4-a716-446655440002,Paracetamol,true,false,OTC,Max 4g daily
-550e8400-e29b-41d4-a716-446655440003,Vitamin C,false,false,Supplements,""
-550e8400-e29b-41d4-a716-446655440004,Ibuprofen,true,false,OTC,Take with food
-550e8400-e29b-41d4-a716-446655440005,Isopropyl Alcohol,false,false,First Aid,""
+
+550e8400-e29b-41d4-a716-446655440006,Retail Generic,false,false,Retail,""
+550e8400-e29b-41d4-a716-446655440007,Cosmetics Generic,false,false,Cosmetics,""
+550e8400-e29b-41d4-a716-446655440008,Personal Care Generic,false,false,Personal Care,""
+550e8400-e29b-41d4-a716-446655440009,Household Generic,false,false,Household,""
+550e8400-e29b-41d4-a716-446655440010,Health & Wellness Generic,false,false,Wellness,""
+550e8400-e29b-41d4-a716-446655440011,Baby Care Generic,false,false,Baby Care,""
+550e8400-e29b-41d4-a716-446655440012,Skin Care Generic,false,false,Cosmetics,""
+550e8400-e29b-41d4-a716-446655440013,Hair Care Generic,false,false,Cosmetics,""
+550e8400-e29b-41d4-a716-446655440014,Oral Care Generic,false,false,Personal Care,""
+550e8400-e29b-41d4-a716-446655440015,Stationery Generic,false,false,Stationery,""
+550e8400-e29b-41d4-a716-446655440016,Office Supplies Generic,false,false,Office Supplies,""
+550e8400-e29b-41d4-a716-446655440017,School Supplies Generic,false,false,School Supplies,""
+550e8400-e29b-41d4-a716-446655440018,Books & Printed Materials Generic,false,false,Books,""
+550e8400-e29b-41d4-a716-446655440019,Electronics Accessories Generic,false,false,Electronics,""
+550e8400-e29b-41d4-a716-446655440020,Phone Accessories Generic,false,false,Electronics,""
+550e8400-e29b-41d4-a716-446655440021,Toys & Games Generic,false,false,Toys,""
+550e8400-e29b-41d4-a716-446655440022,Gift Items Generic,false,false,Gifts,""
+550e8400-e29b-41d4-a716-446655440023,Party Supplies Generic,false,false,Party Supplies,""
+550e8400-e29b-41d4-a716-446655440024,Seasonal Items Generic,false,false,Seasonal,""
+550e8400-e29b-41d4-a716-446655440025,Hardware & Tools Generic,false,false,Hardware,""
+550e8400-e29b-41d4-a716-446655440026,General Merchandise Generic,false,false,Retail,""
+
+550e8400-e29b-41d4-a716-446655440101,Antibiotics,true,true,Pharmaceutical Generic,Prescription only
+550e8400-e29b-41d4-a716-446655440102,Analgesics,true,false,Pharmaceutical Generic,Follow recommended dosage
+550e8400-e29b-41d4-a716-446655440103,Antipyretics,true,false,Pharmaceutical Generic,Do not exceed daily dose
+550e8400-e29b-41d4-a716-446655440104,Non-Steroidal Anti-Inflammatory Drugs (NSAIDs),true,false,Pharmaceutical Generic,Take with food
+550e8400-e29b-41d4-a716-446655440105,Antiseptics & Disinfectants,true,false,Pharmaceutical Generic,For external use only
+550e8400-e29b-41d4-a716-446655440106,Vitamins & Supplements,false,false,Pharmaceutical Generic,""
+550e8400-e29b-41d4-a716-446655440107,Antihistamines,true,false,Pharmaceutical Generic,May cause drowsiness
+550e8400-e29b-41d4-a716-446655440108,Cough & Cold Preparations,true,false,Pharmaceutical Generic,Avoid combination overdose
+550e8400-e29b-41d4-a716-446655440109,Antacids,true,false,Pharmaceutical Generic,Space doses from other medicines
+550e8400-e29b-41d4-a716-446655440110,Antimalarials,true,true,Pharmaceutical Generic,Use only after testing
